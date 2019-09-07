@@ -1,0 +1,41 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-cyan">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <a class="navbar-brand" href="/">Tuzo</a>
+  
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+      <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+        {% if user.is_authenticated %}
+        <li class="dropdown">
+          <a href="#" class=" btn btn-default" data-toggle="dropdown" role="button" aria-expanded="false"><p>Account</p>
+          <span class="caret"></span>
+          </a>
+            <ul class="dropdown-menu" role="menu"  aria-labelledby="navbarDropdown">
+              <li>
+                <a href="{%url 'welcome'%}" class="tudulu" >Home</a>
+              </li>
+              <li>
+                <a href="{%url 'new-project'%}" class="tudulu">Create Article</a>
+              </li>
+              <li>
+                <a href="/accounts/password/change" class="tudulu">Change Password</a>
+              </li>
+              <li>
+                <a href="/logout" class="tudulu">Logout</a>
+              </li>
+            </ul>
+          </li>
+          {%else%}
+          <li>
+            <a class='btn btn-default' href="/accounts/login" class="tudulu">Login</a>
+          </li>
+    {% endif %}
+  
+      </ul>
+  
+  <!-- login/logout functionality -->
+  
+  
+    </div>
+  </nav>

@@ -1,0 +1,36 @@
+{%extends 'base.html'%}
+{%load bootstrap4%}
+{% block content %}
+{{block.super}}
+
+
+{% include "navbar.html" %}
+
+<div class="container">
+  <div class="row">
+    {%for project in projects%}
+    <div class="column">
+
+      <div class="card padawan">
+          <div class="hover">
+            <img src="{{project.landing_page.url}}" class="card-img hover" alt="img" width="100%">
+            <div class="card-img-overlay">
+              <a href="/project/{{project.id}}"><p class="card-text text-center opacity">VOTE NOW</p></a>
+          </div>
+        </div>
+        <div class="card-body">
+          <h5>{{project.title}}</h5>
+          <p>{{project.description}}</p>
+          <h6>Posted on 25th/05/19</h6>
+          <hr>
+          <p class="text-muted">By:<b>Ezekiel Njavi</b></p>
+          <p>Rated: <b>{{random}}</b></p>
+        </div>
+      </div>
+
+    </div>
+    {%endfor%}
+  </div>
+</div>
+
+{% endblock %}
