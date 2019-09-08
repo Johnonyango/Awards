@@ -44,3 +44,19 @@ def index(request):
 def myprojects(request):
     projects = Project.objects.all().order_by()
     return render(request,'myprojects.html', {'projects':projects})
+
+@login_required(login_url='/accounts/login/')
+def new_projects(request):
+  ida = request.user.id
+
+  if request.method == 'POST':
+    form = NewProjectForm(request.POST, request.FILES)
+    if form.is_valid():
+      project = form.save(commit=False)
+      project.save()
+    return redirect('index')
+
+  else:
+    form = NewProjectForm()
+
+  return render(request, 'new_project.html',{'form':form,'profile':profile})
