@@ -1,36 +1,47 @@
-{% load bootstrap3 %}
-{% load staticfiles %}
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-
-  {%if title%}
-
-  <title>{{title}}</title>
-
-  {%endif%}
-
-  {% block styles %}
-    {% bootstrap_css %}
-    <link href="https://fonts.googleapis.com/css?family=PT+Sans|Teko&display=swap" rel="stylesheet">
-  {% endblock %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
 
 </head>
 
 <body>
+    {% load static%}
+    {% block styles %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Sidenav</title>
+    <link href="https://fonts.googleapis.com/css?family=Cormorant+Garamond|Dancing+Script" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Source+Serif+Pro" rel="stylesheet">
+    {% block materialize%}
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 
-  {% block content %}  {%endblock%}
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <link rel="stylesheet" href="{% static 'css/animate.css'%}">
+    <link rel="stylesheet" href="{% static 'css/materialize.min.css'%}">
+    {% endblock %}
 
 
-  {% block scripts %}
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    {% bootstrap_javascript %}
-  {% endblock %}
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    {% endblock %}
 
-</body>
+    </head>
+
+    <body>
+        {% include "navbar.html" %}
+        {% block content %} {%endblock%}
+
+        {% block scripts %}
+
+        {% endblock %}
+    </body>
 
 </html>
