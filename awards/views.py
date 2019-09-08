@@ -60,3 +60,12 @@ def new_projects(request):
     form = NewProjectForm()
 
   return render(request, 'new_project.html',{'form':form,'profile':profile})
+
+  @login_required(login_url='/accounts/login/')
+def profile(request, id):
+  ida = request.user.id
+  profile = Profile.objects.get(user=ida)
+  user = request.user
+  myprofile = Profile.objects.get(pk=id)
+
+  return render(request, 'profile.html',{'profile':profile,'projects':projects})
