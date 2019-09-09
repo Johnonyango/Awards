@@ -20,7 +20,7 @@ from .forms import AwardLetterForm
 def welcome(request):
   id = request.user.id
   profile = Profile.objects.get(user=id)
-  return render(request, 'index.html',{'profile':profile})
+  return render(request, 'home.html',{'profile':profile})
 
 
 @login_required(login_url='/accounts/login/')
@@ -30,7 +30,7 @@ def myprojects(request):
 
   projects = Project.objects.all().order_by('-pub_date')
 
-  return render(request, 'myproject.html',{'projects':projects,'profile':profile})
+  return render(request, 'posted_projects.html',{'projects':projects,'profile':profile})
 
 
 @login_required(login_url='/accounts/login/')
@@ -57,8 +57,8 @@ def mail(request):
 
 @login_required(login_url='/accounts/login/')
 def newproject(request):
-  frank = request.user.id
-  profile = Profile.objects.get(user=frank)
+  user = request.user.id
+  profile = Profile.objects.get(user=user)
 
   current_user = request.user
   current_username = request.user.username
@@ -78,8 +78,8 @@ def newproject(request):
 
 @login_required(login_url='/accounts/login/')
 def newrating(request,id):
-  frank = request.user.id
-  profile = Profile.objects.get(user=frank)
+  user = request.user.id
+  profile = Profile.objects.get(user=user)
   id = id
   current_username = request.user.username
 
@@ -118,8 +118,8 @@ def profile(request, id):
 
 @login_required(login_url='/accounts/login/')
 def project(request, id):
-  frank = request.user.id
-  profile = Profile.objects.get(user=frank)
+  user = request.user.id
+  profile = Profile.objects.get(user=user)
   
   project = Project.objects.get(pk=id)
   ratings = Rating.objects.filter(project=id)
@@ -145,11 +145,11 @@ def newprofile(request):
   
   
   if request.method == 'POST':
-    instance = get_object_or_404(Profile, user=frank)
+    instance = get_object_or_404(Profile, user=john)
     form = ProfileForm(request.POST, request.FILES,instance=instance)
     if form.is_valid():
       form.save()
-    return redirect('profile', frank)
+    return redirect('profile', john)
 
   else:
     form = ProfileForm()
@@ -159,8 +159,8 @@ def newprofile(request):
 
 @login_required(login_url='/accounts/login/')
 def search(request):
-  frank = request.user.id
-  profile = Profile.objects.get(user=frank)
+  user = request.user.id
+  profile = Profile.objects.get(user=user)
 
 
   if 'project' in request.GET and request.GET['project']:
@@ -204,7 +204,7 @@ def subscribe(request):
             recipient = AwardLetterRecipients(name = name,email =email)
             recipient.save()
             send_welcome_email(name,email)
-            HttpResponseRedirect('index.html')
+            HttpResponseRedirect('home.html')
     else:
         form = AwardLetterForm()
     return render(request, 'subscribe.html', {'letterForm':form,'profile':profile})    
