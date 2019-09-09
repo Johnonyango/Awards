@@ -57,24 +57,26 @@ LOgout and rating functions still not implemented. Working round the clock tp ac
       <th>Output</th>   
     </tr>
     <tr>
-        <td>Enter your name</td>
-        <td>['Calvince']</td>
-        <td>name = 'calvince'</td>
+        <td>Display all applications on database</td>
+        <td>heroku link</td>
+        <td>Loads all applications</td>
     </tr>
     <tr>
-        <td>Enter Email && Message</td>
-        <td>['Email','Message']</td>
-        <td>Email && Message</td>
+        <td>Review live site</td>
+        <td>click on review button</td>
+        <td>Takes you to site on deployment platform
+</td>
     </tr>
     <tr>
-        <td>Submit</td>
-        <td>Email && Message</td>
-        <td>Thank you Calvince, details received</td>
+        <td>Rate a project	</td>
+        <td>Ratings</td>
+        <td>Displays ratings and mean rate
+</td>
     </tr>
     <tr>
-        <td>Sum of two values<= third value </td>
-        <td>[1,2,5]</td>
-        <td>No triangle</td>
+        <td>Update projects as user	 </td>
+        <td>update or allows user to post a new project	</td>
+        <td>Posts</td>
     </tr>    
 </table>
 
