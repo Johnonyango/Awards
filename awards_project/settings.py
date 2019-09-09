@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 
 import os
 import dj_database_url
+import django_heroku
 from decouple import config,Csv
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -143,10 +144,10 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
-# django_heroku.settings(locals())
-# STATICFILES_DIRS = (
-#     os.path.join(BASE_DIR, 'static'),
-# )
+django_heroku.settings(locals())
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
 
 
 REST_FRAMEWORK = {
