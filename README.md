@@ -57,20 +57,20 @@ LOgout and rating functions still not implemented. Working round the clock tp ac
       <th>Output</th>   
     </tr>
     <tr>
-        <td>Display all applications on database</td>
+        <td>Display all applications on the project</td>
         <td>heroku link</td>
         <td>Loads all applications</td>
     </tr>
     <tr>
         <td>Review live site</td>
         <td>click on review button</td>
-        <td>Takes you to site on deployment platform
+        <td>Redirects user to the deployed site on heroku
 </td>
     </tr>
     <tr>
         <td>Rate a project	</td>
-        <td>Ratings</td>
-        <td>Displays ratings and mean rate
+        <td>Click on the rating button</td>
+        <td>Displays ratings and mean rate based on previous ratings by other users
 </td>
     </tr>
     <tr>
