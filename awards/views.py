@@ -212,4 +212,4 @@ def subscribe(request):
 def searchme(request):
   id = request.user.id
   profile = Profile.objects.get(user=id)
-  return render(request, 'searchme.html',{'profile':profile})
+  return render(request, 'search_button.html',{'profile':profile})
