@@ -59,18 +59,27 @@
             <a href="{%url 'welcome'%}">Home</a>
             <a href="/accounts/login">Login</a>
             <a href="/accounts/register">Register</a>
-            <a href="{% url 'newproject'%}">Add Sites</a>
+            <a href="{% url 'newproject'%}">Add Project</a>
+            <a href="{% url 'profile' profile.id %}">Profile</a>
+            <a href="{% url 'newprofile' %}">Add a profile</a>
+            <a href="{% url 'myprojects' %}">Projects</a>
+            <a href="{% url 'password' %}">Manage passwords</a>
             <a href="{% url 'contact' %}">Contact Us</a>
-            <a href="{% url 'searchme' %}">Search Projects</a>
-            <a href="{% url 'subscribe' %}">Subscribe</a>
+
+
+
+
+
+
+
 
 
 
 
         </div>
 
-        <div id="main" style="background-color: #040a0e;color: whitesmoke">
-            <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776;SEE MENU</span>
+        <div id="main" style="background-color: #485d6b;color: whitesmoke">
+            <span style="font-size:30px; color:brown;cursor:pointer" onclick="openNav()">&#9776;SEE MENU</span>
         </div>
         
     </nav>
