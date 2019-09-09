@@ -8,7 +8,6 @@ from django.db.models import Q
 from django.shortcuts import get_object_or_404
 from .forms import ProjectForm, RatingForm, ProfileForm
 from .models import Project, Rating, Profile,AwardLetterRecipients
-# from .email import send_welcome_email
 from django.db.models import Avg
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -21,9 +20,6 @@ from .forms import AwardLetterForm
 def welcome(request):
   id = request.user.id
   profile = Profile.objects.get(user=id)
-
-  # projects = Project.objects.all().order_by('-pub_date')
-
   return render(request, 'index.html',{'profile':profile})
 
 
@@ -41,9 +37,6 @@ def myprojects(request):
 def password(request):
   id = request.user.id
   profile = Profile.objects.get(user=id)
-
-  # projects = Project.objects.all().order_by('-pub_date')
-
   return render(request, 'password.html',{'profile':profile})
 
 
@@ -81,7 +74,6 @@ def newproject(request):
 
   else:
     form = ProjectForm()
-
   return render(request, 'newproject.html',{'form':form,'profile':profile})
 
 @login_required(login_url='/accounts/login/')
@@ -89,7 +81,6 @@ def newrating(request,id):
   frank = request.user.id
   profile = Profile.objects.get(user=frank)
   id = id
-
   current_username = request.user.username
 
   if request.method == 'POST':
@@ -112,21 +103,16 @@ def newrating(request,id):
 
   else:
     form = RatingForm()
-
   return render(request, 'rating.html',{'form':form,'profile':profile,'id':id})
+
 
 @login_required(login_url='/accounts/login/')
 def profile(request, id):
   frank = request.user.id
   profile = Profile.objects.get(user=frank)
-
   user = request.user
-  
-
   projects = Project.objects.filter(poster=frank).order_by('-pub_date')
   projectcount=projects.count()
-
-
   return render(request, 'photos/profile.html',{'profile':profile,'user':user,'projectcount':projectcount,'projects':projects})
 
 
@@ -156,18 +142,13 @@ def project(request, id):
 def newprofile(request):
   frank = request.user.id
   profile = Profile.objects.get(user=frank)
-  # current_user = request.user
-  # current_username = request.user.username
+  
   
   if request.method == 'POST':
     instance = get_object_or_404(Profile, user=frank)
     form = ProfileForm(request.POST, request.FILES,instance=instance)
     if form.is_valid():
       form.save()
-      # u_profile = form.save(commit=False)
-      # u_profile.user = current_user
-      # u_profile.save()
-
     return redirect('profile', frank)
 
   else:
@@ -231,7 +212,4 @@ def subscribe(request):
 def searchme(request):
   id = request.user.id
   profile = Profile.objects.get(user=id)
-
-  # projects = Project.objects.all().order_by('-pub_date')
-
   return render(request, 'searchme.html',{'profile':profile})
