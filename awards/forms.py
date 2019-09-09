@@ -2,19 +2,23 @@ from django import forms
 from .models import Profile, Project, Rating
 
 
-class NewProjectForm(forms.ModelForm):
+class ProjectForm(forms.ModelForm):
   class Meta:
     model = Project
     exclude = ['poster','postername', 'pub_date']
 
 
-class NewRatingForm(forms.ModelForm):
+class RatingForm(forms.ModelForm):
   class Meta:
     model = Rating
-    exclude = ['project','postername','pub_date']
+    exclude = ['average','project','postername','pub_date']
 
 
-class NewProfileForm(forms.ModelForm):
+class ProfileForm(forms.ModelForm):
   class Meta:
     model = Profile
     exclude = ['user']
+
+class AwardLetterForm(forms.Form):
+    your_name = forms.CharField(label='First Name',max_length=30)
+    email = forms.EmailField(label='Email')

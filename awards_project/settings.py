@@ -44,11 +44,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'awards',
-    'tinymce',
+    'awards.apps.AwardsConfig',
+    # 'tinymce',
     'rest_framework',
-
-
+    'registration',
 
 ]
 

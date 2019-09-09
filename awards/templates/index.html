@@ -1,40 +1,169 @@
-{%extends "registration/base.html"%}
-{% block content %}
-<div class="container">
-  <div class="row">
-    <!-- Empty div -->
-    <div class="col s4"></div>
-    <div class="col s4">
-      {% if form.errors %}
-        <p> Password or Username is incorrect </p>
-      {% endif %}
-      <div class="panel panel-default">
+{% extends "base.html" %} {% load bootstrap3 %} {% block content %}
 
-        <div class="panel-heading">
-          <h3 class="text-center">Sign In</h3>
-        </div>
-        <div class="panel-body">
+<!DOCTYPE html>
+<html lang="en">
 
-          <form  action="/accounts/login/" method="post">
-            {% csrf_token %}
-            {% bootstrap_form form%}
+<head>
+    <!-- Required meta tags always come first -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>AWARDS</title>
 
-            <div class="form-group">
-              <input type="submit" class="btn btn-primary btn-sm" value="Login"><br>
-              <p>Don't have an account? <a href="/accounts/register">Sign Up</a></p>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css">
+    <link href="https://fonts.googleapis.com/css?family=Major+Mono+Display" rel="stylesheet">
+
+    
+</head>
+
+<body>
+        <!-- /.Navbar -->
+    </header>
+    <!--/.Double navigation-->
+    
+    <!--Main layout-->
+    <main>
+        <h1 style="text-align:center;font-family: 'Major Mono Display', monospace;">AWARDSITE</h1>
+        <div class="container-fluid text-center">
+
+            <!--Card-->
+            <div class="card card-cascade wider reverse my-4 pb-5">
+
+                <!--Card image-->
+                <div class="view view-cascade overlay wow fadeIn">
+                    <img src="https://images.unsplash.com/photo-1502083728181-687546e77613?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80" class="img-fluid" width="100%" height="10%">
+                    <a href="#!">
+                        <div class="mask rgba-white-slight"></div>
+                    </a>
+                </div>
+                <!--/Card image-->
+
+                <!--Card content-->
+                <div class="card-body card-body-cascade text-center wow fadeIn" data-wow-delay="0.2s" style="background: linear-gradient(to right, #16222a, #3a6073);">
+                    <!--Title-->
+                    <h4 class="card-title" style="color:whitesmoke"><strong>Shortcuts</strong></h4>
+                    
+                       <div class="well">
+                        <a href="{% url 'contact' %}" class="btn-lg" style="background-color:#33705c;color: white">Contacts</a>
+                        <a href="{% url 'newprofile' %}" class="btn-lg" style="background-color:#33705c;color: white">New Profile</a>
+                        <a href="{% url 'newproject' %}" class="btn-lg" style="background-color:#33705c;color: white">Add Project</a>
+                        </div>
+                </div>
+                <!--/.Card content-->
+
             </div>
-
-            <input type="hidden" name="next" value="{{next}}">
-
-          </form>
-
+            <!--/.Card-->
+        
         </div>
+        
+    </main>
+    <!--/Main layout-->
 
-      </div>
+    <!--Footer-->
+    <footer class="page-footer text-center text-md-left pt-4">
 
-    </div>
-    <div class="col s4"></div>
-  </div>
-</div>
+        <!--Footer Links-->
+        <div class="container-fluid">
+            <div class="row">
 
-{% endblock %}
+                <!--First column-->
+                <div class="col-md-3">
+                    <h5 class="text-uppercase font-weight-bold mb-4">More Info</h5>
+                    <p>Here are More info and links.</p>
+                </div>
+                <!--/.First column-->
+
+                <hr class="w-100 clearfix d-md-none">
+
+                <!--Second column-->
+                <div class="col-md-2 mx-auto">
+                    <h5 class="text-uppercase font-weight-bold mb-4">Add Projects</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="{% url 'newproject' %}" style="color:white">Add Project</a></li>
+                        
+                    </ul>
+                </div>
+                <!--/.Second column-->
+
+                <hr class="w-100 clearfix d-md-none">
+
+                <!--Third column-->
+                <div class="col-md-2 mx-auto">
+                    <h5 class="text-uppercase font-weight-bold mb-4">Projects</h5>
+                    <ul class="list-unstyled">
+                        <li><a  href="{% url 'myprojects' %}" style="color:white">My Projects</a></li>
+                        
+                    </ul>
+                </div>
+                <!--/.Third column-->
+
+                <hr class="w-100 clearfix d-md-none">
+
+                <!--Fourth column-->
+                <div class="col-md-2 mx-auto">
+                    <h5 class="text-uppercase font-weight-bold mb-4" style="color:white">Profile</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="{% url 'profile' profile.id %}" style="color:white">My Profile</a></li>
+                        
+                    </ul>
+                </div>
+                <!--/.Fourth column-->
+
+            </div>
+        </div>
+        <!--/.Footer Links-->
+
+        
+
+        <!--Social buttons-->
+        <div class="social-section text-center">
+            <ul class="list-unstyled list-inline">
+                <li class="list-inline-item"><a href="https://facebook.com/Francis Sakwa" class="btn-floating btn-fb" style="color:white"><i class="fab fa-facebook-f"> </i></a></li>
+                <li class="list-inline-item"><a href="https://twitter.com/Francis Sakwa" class="btn-floating btn-tw" style="color:white"><i class="fab fa-twitter"> </i></a></li>
+                <li class="list-inline-item"><a href="https://google.com" class="btn-floating btn-gplus" style="color:white"><i class="fab fa-google-plus-g"> </i></a></li>
+                <li class="list-inline-item"><a href="https://ke.linkedin.com/" class="btn-floating btn-li" style="color:white"><i class="fab fa-linkedin-in"> </i></a></li>
+                <li class="list-inline-item"><a href="https://github.com/FrancisSakwa89" class="btn-floating btn-git" style="color:white"><i class="fab fa-github"> </i></a></li>
+            </ul>
+        </div>
+        <!--/.Social buttons-->
+
+        <!--Copyright-->
+        <div class="footer-copyright py-3 text-center">
+            <div class="container-fluid">
+                © 2018 Copyright: <a href="http://github.com/FrancisSakwa89" style="color:white"> Francis Sakwa </a>
+
+            </div>
+        </div>
+        <!--/.Copyright-->
+
+    </footer>
+    <!--/.Footer-->
+
+    <!-- SCRIPTS -->
+    <!-- JQuery -->
+    <script type="text/javascript" src="../../js/jquery-3.3.1.min.js"></script>
+
+    <!-- Tooltips -->
+    <script type="text/javascript" src="../../js/popper.min.js"></script>
+
+    <!-- Bootstrap core JavaScript -->
+    <script type="text/javascript" src="../../js/bootstrap.min.js"></script>
+
+    <!-- MDB core JavaScript -->
+    <script type="text/javascript" src="../../js/mdb.min.js"></script>
+    <script>
+         // SideNav Initialization
+        $(".button-collapse").sideNav();
+        
+        new WOW().init();
+    
+    </script>
+
+
+</body>
+
+</html>
+
+
+      {% endblock %}

@@ -1,169 +1,109 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse,HttpResponseRedirect, Http404
-from .models import Profile, Project, Rating
-from .forms import NewRatingForm, NewProjectForm, NewProfileForm
+from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.decorators import login_required
-# from rest_framework import status
-from .permissions import IsAdminOrReadOnly
-import datetime as dt
-from .serializer import ProfileSerializer,ProjectSerializer
+from django.contrib.auth.models import User
+from django.urls import reverse
+from django.db.models import Q
+from django.shortcuts import get_object_or_404
+from .forms import ProjectForm, RatingForm, ProfileForm
+from .models import Project, Rating, Profile,AwardLetterRecipients
+# from .email import send_welcome_email
+from django.db.models import Avg
+from rest_framework.response import Response
 from rest_framework.views import APIView
-# from rest_framework.response import Response
+from .serializer import ProjectSerializer, ProfileSerializer
+from .forms import AwardLetterForm
 
-
-
-'''welcome view to process landing page'''
-def convert_dates(dates):
-    # function that gets the weekday number for the date.
-    day_number = dt.date.weekday(dates)
-
-    days = ['Monday','Tuesday','Wednesday','thursday','Friday','Saturday','Sunday']
-    '''
-    Returns the actual day of the week
-    '''
-    day = days[day_number]
-    return day
-
-def project(request, project_id):
-    try:
-        project = Project.objects.get(id=project_id)
-        projects = Project.objects.all()
-    except:
-        raise Http404()
-    return render(request, "single_project.html", {"project":project, "projects":projects})
 
 
 @login_required(login_url='/accounts/login/')
-def index(request):
+def welcome(request):
   id = request.user.id
-  projects = Project.objects.all().order_by('-pub_date')
+  profile = Profile.objects.get(user=id)
 
-  return render(request, 'index.html',{'projects':projects,'profile':profile})
+  # projects = Project.objects.all().order_by('-pub_date')
+
+  return render(request, 'index.html',{'profile':profile})
+
 
 @login_required(login_url='/accounts/login/')
 def myprojects(request):
-    projects = Project.objects.all().order_by()
-    return render(request,'myprojects.html', {'projects':projects})
+  id = request.user.id
+  profile = Profile.objects.get(user=id)
+
+  projects = Project.objects.all().order_by('-pub_date')
+
+  return render(request, 'myproject.html',{'projects':projects,'profile':profile})
+
 
 @login_required(login_url='/accounts/login/')
-def new_projects(request):
-  ida = request.user.id
+def password(request):
+  id = request.user.id
+  profile = Profile.objects.get(user=id)
 
-  if request.method == 'POST':
-    form = NewProjectForm(request.POST, request.FILES)
-    if form.is_valid():
-      project = form.save(commit=False)
-      project.save()
-    return redirect('index')
+  # projects = Project.objects.all().order_by('-pub_date')
 
-  else:
-    form = NewProjectForm()
+  return render(request, 'password.html',{'profile':profile})
 
-  return render(request, 'new_project.html',{'form':form,'profile':profile})
 
-@login_required(login_url='/accounts/login/')
-def profile(request, id):
-  ida = request.user.id
-  profile = Profile.objects.get(user=ida)
-  user = request.user
-  myprofile = Profile.objects.get(pk=id)
 
-  return render(request, 'profile.html',{'profile':profile,'projects':projects})
-
-@login_required(login_url='/accounts/login/')
-def edit_profile(request):
-  ida = request.user.id
-  profile = Profile.objects.get(user=ida)
-  
-  if request.method == 'POST':
-    instance = get_object_or_404(Profile, user=ida)
-    form = NewProfileForm(request.POST, request.FILES,instance=instance)
-    if form.is_valid():
-      form.save()
-
-    return redirect('profile', ida)
-
-  else:
-    form = NewProfileForm()
-
-  return render(request, 'edit_profile.html',{'form':form,'profile':profile})
-
-def search(request):
-
-    if 'project' in request.GET and request.GET["project"]:
-        search_term = request.GET.get("project")
-        searched_projects = project.search_by_title(search_term)
-        message = f"{search_term}"
-        return render(request, 'search.html',{"message":message,"projects": searched_projects})
-
-    else:
-        message = "You haven't searched for any term"
-        return render(request, 'search.html',{"message":message})
-
-class ProfileList(APIView):
-    def get(self, request, format=None):
-        all_profile = AwardsProfiles.objects.all()
-        serializers = ProfileSerializer(all_profile, many=True)
-        return Response(serializers.data)
-
-    def post(self, request, format=None):
-        serializers = ProfileSerializer(data=request.data)
-        if serializers.is_valid():
-            serializers.save()
-            return Response(serializers.data, status=status.HTTP_201_CREATED)
-        return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
-        permission_classes = (IsAdminOrReadOnly,)
 class ProjectList(APIView):
-    def get(self, request, format=None):
-        all_project = AwardsProjects.objects.all()
-        serializers = ProjectSerializer(all_project, many=True)
-        return Response(serializers.data)
+  def get(self, request, format=None):
+    all_projects = Project.objects.all()
+    serializers = ProjectSerializer(all_projects, many=True)
+    return Response(serializers.data)
 
-    def post(self, request, format=None):
-        serializers =  ProjectSerializer(data=request.data)
-        if serializers.is_valid():
-            serializers.save()
-            return Response(serializers.data, status=status.HTTP_201_CREATED)
-        return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
-        permission_classes = (IsAdminOrReadOnly,)
-class ProfileDescription(APIView):
-    permission_classes = (IsAdminOrReadOnly,)
-    def get_profile(self, pk):
-        try:
-            return ProfileList.objects.get(pk=pk)
-        except ProfileList.DoesNotExist:
-            return Http404
+def mail(request):
+  name = request.user.username
+  email = request.user.email
+  
+  send_welcome_email(name,email)
 
-    def get(self, request, pk, format=None):
-        merch = self.get_profile(pk)
-        serializers = ProfileSerializer(merch)
-        return Response(serializers.data)
+  return HttpResponseRedirect(reverse('welcome'))
 
-class ProjectDescription(APIView):
-    permission_classes = (IsAdminOrReadOnly,)
-    def get_project(self, pk):
-        try:
-            return ProjectList.objects.get(pk=pk)
-        except ProjectList.DoesNotExist:
-            return Http404
-
-    def get(self, request, pk, format=None):
-        merch = self.get_project(pk)
-        serializers = ProjectSerializer(merch)
-        return Response(serializers.data)
 @login_required(login_url='/accounts/login/')
-def newrating(request,id):
-  ida = request.user.id
-  idd = id
+def newproject(request):
+  frank = request.user.id
+  profile = Profile.objects.get(user=frank)
+
+  current_user = request.user
   current_username = request.user.username
 
   if request.method == 'POST':
-    form = NewRatingForm(request.POST)
+    form = ProjectForm(request.POST, request.FILES)
+    if form.is_valid():
+      project = form.save(commit=False)
+      project.poster = current_user
+      project.postername = current_username
+      project.save()
+    return redirect('welcome')
+
+  else:
+    form = ProjectForm()
+
+  return render(request, 'newproject.html',{'form':form,'profile':profile})
+
+@login_required(login_url='/accounts/login/')
+def newrating(request,id):
+  frank = request.user.id
+  profile = Profile.objects.get(user=frank)
+  id = id
+
+  current_username = request.user.username
+
+  if request.method == 'POST':
+    form = RatingForm(request.POST)
     if form.is_valid():
       rating = form.save(commit=False)
+
       design_rating = form.cleaned_data['design']
       usability_rating = form.cleaned_data['usability']
       content_rating = form.cleaned_data['content']
+
+      avg = ((design_rating + usability_rating + content_rating)/3)
+
+      rating.average = avg
       rating.postername = current_username
       rating.project = Project.objects.get(pk=id)
 
@@ -171,6 +111,127 @@ def newrating(request,id):
     return redirect('project',id)
 
   else:
-    form = NewRatingForm()
+    form = RatingForm()
 
-  return render(request, 'newrating.html',{'form':form,'profile':profile,'idd':idd})
+  return render(request, 'rating.html',{'form':form,'profile':profile,'id':id})
+
+@login_required(login_url='/accounts/login/')
+def profile(request, id):
+  frank = request.user.id
+  profile = Profile.objects.get(user=frank)
+
+  user = request.user
+  
+
+  projects = Project.objects.filter(poster=frank).order_by('-pub_date')
+  projectcount=projects.count()
+
+
+  return render(request, 'photos/profile.html',{'profile':profile,'user':user,'projectcount':projectcount,'projects':projects})
+
+
+@login_required(login_url='/accounts/login/')
+def project(request, id):
+  frank = request.user.id
+  profile = Profile.objects.get(user=frank)
+  
+  project = Project.objects.get(pk=id)
+  ratings = Rating.objects.filter(project=id)
+
+  
+  project = Project.objects.get(pk=id)
+
+  a = Rating.objects.filter(project=id).aggregate(Avg('design'))
+  b = Rating.objects.filter(project=id).aggregate(Avg('usability'))
+  c = Rating.objects.filter(project=id).aggregate(Avg('content'))
+  d = Rating.objects.filter(project=id).aggregate(Avg('average'))
+  
+
+
+  return render(request, 'photos/project.html',{'profile':profile,'project':project,'ratings':ratings,'a':a,'b':b,'c':c,'d':d})
+
+
+
+@login_required(login_url='/accounts/login/')
+def newprofile(request):
+  frank = request.user.id
+  profile = Profile.objects.get(user=frank)
+  # current_user = request.user
+  # current_username = request.user.username
+  
+  if request.method == 'POST':
+    instance = get_object_or_404(Profile, user=frank)
+    form = ProfileForm(request.POST, request.FILES,instance=instance)
+    if form.is_valid():
+      form.save()
+      # u_profile = form.save(commit=False)
+      # u_profile.user = current_user
+      # u_profile.save()
+
+    return redirect('profile', frank)
+
+  else:
+    form = ProfileForm()
+
+  return render(request, 'newprofile.html',{'form':form,'profile':profile})
+
+
+@login_required(login_url='/accounts/login/')
+def search(request):
+  frank = request.user.id
+  profile = Profile.objects.get(user=frank)
+
+
+  if 'project' in request.GET and request.GET['project']:
+    search_term = request.GET.get('project')
+    message = f'{search_term}'
+    title = 'Search Results'
+
+    try:
+      no_ws = search_term.strip()
+      searched_projects = Project.objects.filter(title__icontains = no_ws)
+
+    except ObjectDoesNotExist:
+      searched_projects = []
+
+    return render(request, 'search.html',{'message':message ,'title':title, 'searched_projects':searched_projects,'profile':profile})
+
+  else:
+    message = 'You haven\'t searched for any users'
+    
+    title = 'Search Error'
+    return render(request,'search.html',{'message':message,'title':title,'profile':profile})
+
+
+
+@login_required(login_url='/accounts/login/')
+def contact(request):
+  id = request.user.id
+  profile = Profile.objects.get(user=id)
+
+  return render(request, 'contacts.html', {'profile':profile})
+
+@login_required(login_url='/accounts/login/')
+def subscribe(request):
+    id = request.user.id
+    profile = Profile.objects.get(user=id)
+    if request.method == 'POST':
+        form = AwardLetterForm(request.POST)
+        if form.is_valid():
+            name = form.cleaned_data['your_name']
+            email = form.cleaned_data['email']
+            recipient = AwardLetterRecipients(name = name,email =email)
+            recipient.save()
+            send_welcome_email(name,email)
+            HttpResponseRedirect('index.html')
+    else:
+        form = AwardLetterForm()
+    return render(request, 'subscribe.html', {'letterForm':form,'profile':profile})    
+
+def searchme(request):
+  id = request.user.id
+  profile = Profile.objects.get(user=id)
+
+  # projects = Project.objects.all().order_by('-pub_date')
+
+  return render(request, 'searchme.html',{'profile':profile})

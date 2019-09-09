@@ -1,32 +1,44 @@
 {% load bootstrap3 %}
 {% load static %}
+
 <!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  {% if title %}
-  <title>Awards - {{title}}</title>
-  {% else %}
-    <title> Awards </title>
-  {% endif %}
+ <html class="no-js">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    {% if title %}
+    <title>Awards - {{title}}</title>
+    {% else %}
+    <title>Awards</title>
+    {% endif %}
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-
-  {% block styles %}
+    {% block styles %}
     {% bootstrap_css %}
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-    <link href="https://fonts.googleapis.com/css?family=PT+Sans|Teko&display=swap" rel="stylesheet">
-  {% endblock %}
-
-</head>
-<body>
-    {% block content %}{%endblock%}
-
-
-    {% block scripts %}
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-     {% bootstrap_javascript %}
+    <link rel="stylesheet" type='text/css' href="{% static 'css/styles.css' %}">
     {% endblock %}
 
-</body>
+  </head>
+  <body>
+      <style>
+        body{
+            background: linear-gradient(to right, #16222a, #3a6073);
+            color: whitesmoke;
+        }
+        </style>
+    
+    {% include 'navbar.html' %}
+
+    <div id="content">
+      {% block content %}{% endblock %}
+    </div>
+    {% block scripts %}
+  
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+      {% bootstrap_javascript %}
+    {% endblock %}
+    
+    <script src="" async defer></script>
+  </body>
 </html>

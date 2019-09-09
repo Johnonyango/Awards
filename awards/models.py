@@ -1,62 +1,56 @@
 from django.db import models
 from django.contrib.auth.models import User
-from tinymce.models import HTMLField
-from django.core.validators import URLValidator
-import datetime as dt
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+
 
 
 # Create your models here.
-class Project(models.Model):
-    title = models.CharField(max_length = 50)
-    image = models.ImageField(upload_to = 'projects/')
-    description = models.TextField(max_length = 500)
-    link = models.TextField(validators=[URLValidator()],null=True)
-    profile = models.ForeignKey(User,on_delete=models.CASCADE, null=True)
-    
-  
-
-    def save_project(self):
-        self.save()
-
-    def delete_project(self):
-        self.delete()
-
-    @classmethod
-    def get_all(cls):
-        projects = cls.objects.all()
-        return projects
-
-    @classmethod
-    def get_project(cls, project_id):
-        project = cls.objects.get(id=site_id)
-        return projects
-
-    @classmethod
-    def search_by_title(cls,search_term):
-        projects_title = cls.objects.filter(title__icontains=search_term)
-        return sites_title
-
 class Profile(models.Model):
-    photo = models.ImageField(upload_to = 'profile/')
-    profile = models.ForeignKey(User,on_delete=models.CASCADE,null = True)
-    bio = models.TextField(max_length = 100)
-    contact = models.IntegerField()
+  photo = models.ImageField(upload_to = 'photos/')
+  bio = models.CharField(max_length=200)
+  contact = models.EmailField()
+  user = models.OneToOneField(User, on_delete=models.CASCADE)
 
-    def save_profile(self):
-        self.save()
+  @receiver(post_save, sender=User)
+  def create_user_profile(sender, instance, created, **kwargs):
+    if created:
+      Profile.objects.create(user=instance)
 
-    def delete_profile(self):
-        self.delete()
+  @receiver(post_save, sender=User)
+  def save_user_profile(sender, instance, **kwargs):
+      instance.profile.save()
 
-class AwardsProfiles(models.Model):
-    name = models.CharField(max_length=40)
-    bio = models.TextField()
-    projects = models.CharField(max_length=70)
-    dp = models.ImageField(upload_to = 'dp/')
+  post_save.connect(save_user_profile, sender=User)
 
-class AwardsProjects(models.Model):
-    project_name = models.CharField(max_length=40)
-    description = models.TextField()
+  def save_profile(self):
+    self.save()
+
+  def delete_profile(self):
+    self.delete()
+
+
+
+class Project(models.Model):
+  title = models.CharField(max_length=60)
+  image = models.ImageField(upload_to = 'photos/')
+  description = models.TextField()
+  link = models.CharField(max_length=100)
+  poster = models.ForeignKey(User,on_delete=models.CASCADE)
+  postername = models.CharField(max_length=60)
+  pub_date = models.DateTimeField(auto_now_add=True)
+
+  def __str__(self):
+    return self.title
+  class Meta:
+    ordering = ['title']
+
+  def save_project(self):
+    self.save()
+
+  def delete_project(self):
+    self.delete()
+
 
 
 class Rating(models.Model):
@@ -66,6 +60,7 @@ class Rating(models.Model):
   design = models.IntegerField(choices=CHOICES)
   usability = models.IntegerField(choices=CHOICES)
   content = models.IntegerField(choices=CHOICES)
+  average = models.IntegerField()
   project = models.ForeignKey(Project, on_delete=models.CASCADE)
   postername = models.CharField(max_length=60)
   pub_date = models.DateTimeField(auto_now_add=True)
@@ -76,3 +71,7 @@ class Rating(models.Model):
 
   def delete_rating(self):
     self.delete()
+
+class AwardLetterRecipients(models.Model):
+    name = models.CharField(max_length = 30)
+    email = models.EmailField()    
