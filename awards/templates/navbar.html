@@ -15,7 +15,7 @@
             z-index: 1;
             top: 0;
             left: 0;
-            background-color:#33705c;
+            background-color:black;
             overflow-x: hidden;
             transition: 0.5s;
             padding-top: 60px;
@@ -28,9 +28,7 @@
             display: block;
             transition: 0.3s;
         }
-        .sidenav a:hover {
-            color: #f1f1f1;
-        }
+        
         .sidenav .closebtn {
             position: absolute;
             top: 0;
@@ -42,12 +40,12 @@
             transition: margin-left .5s;
             padding: 16px;
         }
-        @media screen and (max-height: 450px) {
+        @media screen and (max-height: 500px) {
             .sidenav {
-                padding-top: 15px;
+                padding-top: 20px;
             }
             .sidenav a {
-                font-size: 18px;
+                font-size: 15px;
             }
         }
     </style>
@@ -55,7 +53,8 @@
 
 <body>
     <nav>
-        <div id="mySidenav" style="background-color: #040a0e;color: whitesmoke" class="sidenav">
+        <div id="mySidenav" style="background-color: #040a0e;color: whitesmoke; font-family: 'Lobster', cursive;
+        " class="sidenav">
             <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
             <a href="{%url 'welcome'%}">Home</a>
             <a href="/accounts/login">Login</a>
