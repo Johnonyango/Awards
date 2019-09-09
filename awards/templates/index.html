@@ -12,7 +12,7 @@
 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css">
-    <link href="https://fonts.googleapis.com/css?family=Major+Mono+Display" rel="stylesheet">
+    <!-- <link href="https://fonts.googleapis.com/css?family=Major+Mono+Display" rel="stylesheet"> -->
 
     
 </head>
@@ -23,8 +23,8 @@
     <!--/.Double navigation-->
     
     <!--Main layout-->
-    <main>
-        <h1 style="text-align:center;font-family: 'Major Mono Display', monospace;">AWARDSITE</h1>
+
+        <h1 style="text-align:center;font-family: 'Major Mono Display', monospace;">WELCOME TO AWARDS</h1>
         <div class="container-fluid text-center">
 
             <!--Card-->
@@ -32,7 +32,7 @@
 
                 <!--Card image-->
                 <div class="view view-cascade overlay wow fadeIn">
-                    <img src="https://images.unsplash.com/photo-1502083728181-687546e77613?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80" class="img-fluid" width="100%" height="10%">
+                    <img src="https://ae01.alicdn.com/kf/HTB1aUfoQFXXXXXiXpXXq6xXFXXXd/Free-Shipping-abstract-plain-clear-color-large-area-works-living-room-restaurant-background-lobby-studio-wallpaper.jpg_640x640.jpg" class="img-fluid" width="100%" height="10%">
                     <a href="#!">
                         <div class="mask rgba-white-slight"></div>
                     </a>
@@ -40,16 +40,47 @@
                 <!--/Card image-->
 
                 <!--Card content-->
-                <div class="card-body card-body-cascade text-center wow fadeIn" data-wow-delay="0.2s" style="background: linear-gradient(to right, #16222a, #3a6073);">
+                <div class="card" style="width: 100rem;">
+                    <div class="card-body card-body-cascade text-center wow fadeIn" data-wow-delay="0.2s" style="background: linear-gradient(to right, #16222a, #3a6073);">
+                        <div class="well">
+                            <a href="{% url 'profile' profile.id %}" class="btn-lg" style="background-color:rgb(236, 59, 89);color: white">Profile</a>
+                            <a href="{% url 'newprofile' %}" class="btn-lg" style="background-color:rgb(236, 59, 89);color: white">Add Profile</a>
+                            <a href="{% url 'myprojects' %}" class="btn-lg" style="background-color:rgb(236, 59, 89);color: white">Projects</a>
+                            <a href="{% url 'newproject' %}" class="btn-lg" style="background-color:rgb(236, 59, 89);color: white">Add Project</a>
+                            <a href="/accounts/register"> <class="btn-lg" style="background-color:rgb(236, 59, 89);color: white">Register</a>
+                            <a href="{% url 'subscribe' %}" class="btn-lg" style="background-color:rgb(236, 59, 89);color: white">Subscribe</a>
+                            <a href="{% url 'password' %}" class="btn-lg" style="background-color:rgb(236, 59, 89);color: white">Manage Pasword</a>
+                            <a href="{% url 'contact' %}" class="btn-lg" style="background-color:rgb(236, 59, 89);color: white">Contacts</a>
+
+
+
+
+
+
+                            
+
+
+                            <!-- <li><a class="nav-link" href="/accounts/register">Register</a></li>
+                            <li><a class="nav-link" href="{% url 'profile' profile.id %}">Profile</a></li>
+                            <li><a class="nav-link" href="{% url 'newproject' %}">Add Site</a></li>
+                            <li><a class="nav-link" href="{% url 'newprofile' %}">Add Profile</a></li>
+                            <li><a class="nav-link" href="{% url 'contact' %}">Contacts</a></li>
+                            <li><a class="nav-link" href="{% url 'subscribe' %}">Subscribe</a></li>
+                            <li><a class="nav-link" href="{% url 'myprojects' %}">My Projects</a></li>
+                            <li><a class="nav-link" href="{% url 'password' %}">Forgot Password</a></li> -->
+                        </div>
+                    </div>
+                  </div>
+                <!-- <div class="card-body card-body-cascade text-center wow fadeIn" data-wow-delay="0.2s" style="background: linear-gradient(to right, #16222a, #3a6073);"> -->
                     <!--Title-->
-                    <h4 class="card-title" style="color:whitesmoke"><strong>Shortcuts</strong></h4>
+                    <!-- <h4 class="card-title" style="color:whitesmoke"><strong>Shortcuts</strong></h4>
                     
                        <div class="well">
                         <a href="{% url 'contact' %}" class="btn-lg" style="background-color:#33705c;color: white">Contacts</a>
                         <a href="{% url 'newprofile' %}" class="btn-lg" style="background-color:#33705c;color: white">New Profile</a>
                         <a href="{% url 'newproject' %}" class="btn-lg" style="background-color:#33705c;color: white">Add Project</a>
                         </div>
-                </div>
+                </div> -->
                 <!--/.Card content-->
 
             </div>
@@ -57,113 +88,9 @@
         
         </div>
         
-    </main>
     <!--/Main layout-->
 
     <!--Footer-->
-    <footer class="page-footer text-center text-md-left pt-4">
-
-        <!--Footer Links-->
-        <div class="container-fluid">
-            <div class="row">
-
-                <!--First column-->
-                <div class="col-md-3">
-                    <h5 class="text-uppercase font-weight-bold mb-4">More Info</h5>
-                    <p>Here are More info and links.</p>
-                </div>
-                <!--/.First column-->
-
-                <hr class="w-100 clearfix d-md-none">
-
-                <!--Second column-->
-                <div class="col-md-2 mx-auto">
-                    <h5 class="text-uppercase font-weight-bold mb-4">Add Projects</h5>
-                    <ul class="list-unstyled">
-                        <li><a href="{% url 'newproject' %}" style="color:white">Add Project</a></li>
-                        
-                    </ul>
-                </div>
-                <!--/.Second column-->
-
-                <hr class="w-100 clearfix d-md-none">
-
-                <!--Third column-->
-                <div class="col-md-2 mx-auto">
-                    <h5 class="text-uppercase font-weight-bold mb-4">Projects</h5>
-                    <ul class="list-unstyled">
-                        <li><a  href="{% url 'myprojects' %}" style="color:white">My Projects</a></li>
-                        
-                    </ul>
-                </div>
-                <!--/.Third column-->
-
-                <hr class="w-100 clearfix d-md-none">
-
-                <!--Fourth column-->
-                <div class="col-md-2 mx-auto">
-                    <h5 class="text-uppercase font-weight-bold mb-4" style="color:white">Profile</h5>
-                    <ul class="list-unstyled">
-                        <li><a href="{% url 'profile' profile.id %}" style="color:white">My Profile</a></li>
-                        
-                    </ul>
-                </div>
-                <!--/.Fourth column-->
-
-            </div>
-        </div>
-        <!--/.Footer Links-->
-
-        
-
-        <!--Social buttons-->
-        <div class="social-section text-center">
-            <ul class="list-unstyled list-inline">
-                <li class="list-inline-item"><a href="https://facebook.com/Francis Sakwa" class="btn-floating btn-fb" style="color:white"><i class="fab fa-facebook-f"> </i></a></li>
-                <li class="list-inline-item"><a href="https://twitter.com/Francis Sakwa" class="btn-floating btn-tw" style="color:white"><i class="fab fa-twitter"> </i></a></li>
-                <li class="list-inline-item"><a href="https://google.com" class="btn-floating btn-gplus" style="color:white"><i class="fab fa-google-plus-g"> </i></a></li>
-                <li class="list-inline-item"><a href="https://ke.linkedin.com/" class="btn-floating btn-li" style="color:white"><i class="fab fa-linkedin-in"> </i></a></li>
-                <li class="list-inline-item"><a href="https://github.com/FrancisSakwa89" class="btn-floating btn-git" style="color:white"><i class="fab fa-github"> </i></a></li>
-            </ul>
-        </div>
-        <!--/.Social buttons-->
-
-        <!--Copyright-->
-        <div class="footer-copyright py-3 text-center">
-            <div class="container-fluid">
-                © 2018 Copyright: <a href="http://github.com/FrancisSakwa89" style="color:white"> Francis Sakwa </a>
-
-            </div>
-        </div>
-        <!--/.Copyright-->
-
-    </footer>
-    <!--/.Footer-->
-
-    <!-- SCRIPTS -->
-    <!-- JQuery -->
-    <script type="text/javascript" src="../../js/jquery-3.3.1.min.js"></script>
-
-    <!-- Tooltips -->
-    <script type="text/javascript" src="../../js/popper.min.js"></script>
-
-    <!-- Bootstrap core JavaScript -->
-    <script type="text/javascript" src="../../js/bootstrap.min.js"></script>
-
-    <!-- MDB core JavaScript -->
-    <script type="text/javascript" src="../../js/mdb.min.js"></script>
-    <script>
-         // SideNav Initialization
-        $(".button-collapse").sideNav();
-        
-        new WOW().init();
     
-    </script>
-
-
-</body>
-
-</html>
-
 
       {% endblock %}
